@@ -134,7 +134,7 @@ namespace BrainFCSharp.Class
         }
 
         private char[] OutputingCharArray;
-        private byte[] PointerPosAsByteArray;
+        private byte[] PointerPosAsByteArray = new byte[1];
 
         /// <summary>
         /// Outputs the cerrent byte to the console as an ascii char.
