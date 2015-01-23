@@ -160,6 +160,8 @@ namespace BrainFCSharp.Class
                 InputProgress++;
         }
 
+        private int NestLevel;
+
         /// <summary>
         /// If the cerrently selected byte is 0, than skip to the char after the next ]
         /// </summary>
@@ -169,9 +171,17 @@ namespace BrainFCSharp.Class
                 while (true)
                 {
                     Progress++;
-                    if (ProgramData[Progress] == ']')       // Basically, if the cerrently selected byte is 0, than skip to the char after the next ]
+                    if (ProgramData[Progress] == '[')
+                        NestLevel++;
+
+                    else if (ProgramData[Progress] == ']' && NestLevel == 0)       // Basically, if the cerrently selected byte is 0, than skip to the char after the next ]
+                    {
                         Progress++;
                         break;
+                    }
+
+                    else if (ProgramData[Progress] == ']' && NestLevel != 0)
+                        NestLevel--;
                 }
         }
 
@@ -184,8 +194,14 @@ namespace BrainFCSharp.Class
                 while (true)
                 {
                     Progress--;
-                    if (ProgramData[Progress] == '[')       // Skips back to the last [ unless the byte at the pointer is 0.
+                    if (ProgramData[Progress] == '[' && NestLevel == 0)       // Skips back to the last [ unless the byte at the pointer is 0.
                         break;
+
+                    else if (ProgramData[Progress] == ']')
+                        NestLevel++;
+
+                    else if (ProgramData[Progress] == '[' && NestLevel != 0)
+                        NestLevel--;
                 }
         }
     }
